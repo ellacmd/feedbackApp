@@ -1,0 +1,63 @@
+<!-- *ngIf="feedbackData"  -->
+<div class="container">
+  <div class="sidebar">
+    <div class="header">
+      <h3>Feedback Board</h3>
+      <p style="font-weight: 300">Hello ...</p>
+    </div>
+    <div class="categories">
+      <button
+        [ngClass]="{ active: category === selectedCategory }"
+        *ngFor="let category of categories; index as i"
+        class="category"
+        (click)="sortByCategory(category)"
+      >
+        {{ category }}
+      </button>
+    </div>
+
+    <div class="roadmap">
+      <div class="title">
+        <h3>Roadmap</h3>
+        <a routerLink="/roadmap">
+          <button>View</button>
+        </a>
+      </div>
+      <ul>
+        <li class="planned">Planned <span>2</span></li>
+        <li class="in-progress">In-Progress <span>3</span></li>
+        <li class="live">Live <span>1</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="content">
+    <header>
+      <img src="../../../assets/bulb.svg" />
+      <!-- {{ feedbackData.count }} -->
+      <h2>10 Suggestions</h2>
+
+      <div class="select">
+        <p>Sort By :</p>
+        <mat-form-field>
+          <mat-select placeholder="Most Upvotes">
+            <mat-option value="most-upvotes">Most Upvotes</mat-option>
+            <mat-option value="least-upvotes">Least Upvotes</mat-option>
+            <mat-option value="most-comments">Most Comments</mat-option>
+            <mat-option value="least-comments">Least Comments</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <a routerLink="/add-feedback" class="feedback-link">
+        <button class="feedback-btn">+ Add Feedback</button>
+      </a>
+    </header>
+
+    <div class="feedback-list">
+      <!-- <app-feedback
+          *ngFor="let feedback of feedbackData.productRequests; index as i"
+          [feedback]="feedback"
+        ></app-feedback> -->
+    </div>
+  </div>
+</div>
+<mat-spinner *ngIf="loading | async"></mat-spinner>

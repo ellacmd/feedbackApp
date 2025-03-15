@@ -1,4 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  background-color: #f2f2f2;
+}
+body {
+  margin: 0;
+  font-family: "Jost", sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: "Jost", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent;
+}
+.select .mat-mdc-select-value,
+.select .mat-mdc-select-placeholder,
+.select .mat-mdc-select-arrow {
+  color: #fff;
+}
+
+.select
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+  .mdc-line-ripple::before {
+  border: none;
+
+  background-color: transparent;
+}
+
+.mat-mdc-form-field-infix {
+  width: 145px !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper,
+.mat-mdc-form-field-bottom-align::before {
+  display: none;
+}
+.mat-mdc-text-field-wrapper:hover
+  .mdc-text-field
+  .mdc-text-field--filled
+  .mdc-text-field--no-label {
+  background-color: #373f68 !important;
+}

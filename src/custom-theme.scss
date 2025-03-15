@@ -6,7 +6,7 @@
 
 html {
   @include mat.theme((
-    typography: Roboto,
+    typography: "Jost",
     density: 0,
   ));
 }
