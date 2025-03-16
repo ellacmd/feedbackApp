@@ -1,0 +1,54 @@
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username101" formControlName="username" />
+    </mat-form-field>
+    <div
+      *ngIf="usernameControl?.invalid && usernameControl?.touched"
+      class="error"
+    >
+      <p *ngIf="usernameControl?.errors?.['required']">Username is required.</p>
+    </div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        placeholder="Password"
+        type="password"
+        [type]="hidePassword ? 'password' : 'text'"
+        autocomplete="on"
+        formControlName="password"
+      />
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+        hidePassword ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </mat-form-field>
+    <div
+      *ngIf="passwordControl?.invalid && passwordControl?.touched"
+      class="error"
+    >
+      <p *ngIf="passwordControl?.errors?.['required']">Password is required.</p>
+    </div>
+
+    <button
+      class="submit-btn"
+      [disabled]="loginForm.invalid || (loading | async)"
+      type="submit"
+    >
+      <mat-spinner
+        *ngIf="loading | async; else elseBlock"
+        [diameter]="30"
+        color="accent"
+      ></mat-spinner>
+      <ng-template #elseBlock> Sign in </ng-template>
+    </button>
+    <p style="text-align: center" class="error" *ngIf="error">
+      {{ this.error }}
+    </p>
+  </form>
+
+  <p class="demo-login">
+    Just browsing? <span click="login()">Login with Demo</span>
+  </p>
+</div>

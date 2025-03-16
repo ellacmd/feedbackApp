@@ -1,9 +1,33 @@
-<!-- *ngIf="feedbackData"  -->
-<div class="container">
+<div *ngIf="feedbackData" class="container">
   <div class="sidebar">
     <div class="header">
       <h3>Feedback Board</h3>
-      <p style="font-weight: 300">Hello ...</p>
+
+      <div *ngIf="!user.token" class="login">
+        <button routerLink="/auth">
+          Login
+          <mat-icon
+            aria-hidden="false"
+            fontIcon="login"
+            class="icon"
+          ></mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="user.token" class="logout">
+        <p style="font-weight: 500; text-transform: capitalize">
+          Hello {{ user.user.firstname }}
+        </p>
+
+        <button (click)="logout()">
+          Log out
+          <mat-icon
+            class="icon"
+            aria-hidden="false"
+            fontIcon="logout"
+          ></mat-icon>
+        </button>
+      </div>
     </div>
     <div class="categories">
       <button
@@ -24,22 +48,32 @@
         </a>
       </div>
       <ul>
-        <li class="planned">Planned <span>2</span></li>
-        <li class="in-progress">In-Progress <span>3</span></li>
-        <li class="live">Live <span>1</span></li>
+        <li class="planned">
+          Planned <span>{{ statusCounts.planned }}</span>
+        </li>
+        <li class="in-progress">
+          In-Progress <span>{{ statusCounts["in-progress"] }}</span>
+        </li>
+        <li class="live">
+          Live <span>{{ statusCounts.live }}</span>
+        </li>
       </ul>
     </div>
   </div>
   <div class="content">
     <header>
       <img src="../../../assets/bulb.svg" />
-      <!-- {{ feedbackData.count }} -->
-      <h2>10 Suggestions</h2>
+
+      <h2>{{ feedbackData.count }} Suggestions</h2>
 
       <div class="select">
         <p>Sort By :</p>
         <mat-form-field>
-          <mat-select placeholder="Most Upvotes">
+          <mat-select
+            placeholder="Most Upvotes"
+            [(ngModel)]="selectedSortOption"
+            (selectionChange)="sortFeedback(selectedSortOption)"
+          >
             <mat-option value="most-upvotes">Most Upvotes</mat-option>
             <mat-option value="least-upvotes">Least Upvotes</mat-option>
             <mat-option value="most-comments">Most Comments</mat-option>
@@ -52,12 +86,25 @@
       </a>
     </header>
 
-    <div class="feedback-list">
-      <!-- <app-feedback
-          *ngFor="let feedback of feedbackData.productRequests; index as i"
-          [feedback]="feedback"
-        ></app-feedback> -->
+    <div *ngIf="filteredFeedbacks.length; else elseBlock" class="feedback-list">
+      <app-feedback-card
+        *ngFor="let feedback of filteredFeedbacks; index as i"
+        [feedback]="feedback"
+      ></app-feedback-card>
     </div>
+    <ng-template #elseBlock>
+      <div class="no-feedback">
+        <div>
+          <img src="../../../assets/no-feedback.svg" alt="" />
+          <h1>There is no feedback yet.</h1>
+          <p>
+            Got a suggestion? Found a bug that needs to be squashed? We love
+            hearing about new ideas to improve our app.
+          </p>
+          <button>+ Add Feedback</button>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>
 <mat-spinner *ngIf="loading | async"></mat-spinner>

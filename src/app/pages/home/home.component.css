@@ -160,3 +160,58 @@ mat-spinner {
   margin: 0 auto;
   margin-top: 100px;
 }
+
+.no-feedback {
+  background-color: #fff;
+  border-radius: 8px;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.no-feedback img {
+  margin-bottom: 54px;
+}
+.no-feedback h1 {
+  color: #3a4374;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.no-feedback p {
+  color: #647196;
+  margin-bottom: 48px;
+  max-width: 450px;
+  font-weight: 300;
+}
+.no-feedback button {
+  border-radius: 10px;
+  background: #ad1fea;
+  color: #fff;
+  padding: 12.5px 24px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.logout button {
+  background-color: transparent;
+  display: flex;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+}
+.login button {
+  background-color: transparent;
+  display: flex;
+  gap: 4px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.icon {
+  font-size: 16px;
+  margin-top: 4px;
+}

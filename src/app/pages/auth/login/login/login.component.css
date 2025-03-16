@@ -1,0 +1,44 @@
+.container {
+  background-color: #fff;
+  width: 600px;
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+
+mat-form-field {
+  width: 100%;
+
+  margin-top: 24px;
+}
+
+button {
+  border-radius: 10px;
+  background: #a337f6;
+  padding: 19px 16px;
+  color: #fff;
+  width: 100%;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 24px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+.demo-login {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+.demo-login span {
+  font-weight: 600;
+  cursor: pointer;
+}
+.demo-login span:hover {
+  text-decoration: underline;
+}

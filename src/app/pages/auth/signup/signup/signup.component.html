@@ -1,0 +1,86 @@
+<div class="container">
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+    <div class="name-field">
+      <div>
+        <mat-form-field>
+          <mat-label> First Name</mat-label>
+          <input matInput placeholder="Jane" formControlName="firstName" />
+        </mat-form-field>
+        <div
+          *ngIf="firstNameControl?.invalid && firstNameControl?.touched"
+          class="error"
+        >
+          <p *ngIf="firstNameControl?.errors?.['required']">
+            First name is required.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>LastName</mat-label>
+          <input matInput placeholder="Doe" formControlName="lastName" />
+        </mat-form-field>
+        <div
+          *ngIf="lastNameControl?.invalid && lastNameControl?.touched"
+          class="error"
+        >
+          <p *ngIf="lastNameControl?.errors?.['required']">
+            Last Name is required.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username101" formControlName="username" />
+    </mat-form-field>
+    <div
+      *ngIf="usernameControl?.invalid && usernameControl?.touched"
+      class="error"
+    >
+      <p *ngIf="usernameControl?.errors?.['required']">Username is required.</p>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        placeholder="Password"
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="on"
+      />
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+        {{ hidePassword ? "visibility_off" : "visibility" }}
+      </mat-icon>
+    </mat-form-field>
+
+    <div
+      *ngIf="passwordControl?.invalid && passwordControl?.touched"
+      class="error"
+    ></div>
+
+
+    <div style="margin-bottom: 24px;">
+      <button [disabled]="signupForm.invalid || (loading | async)" type="submit">
+        <mat-spinner
+          *ngIf="loading | async; else elseBlock"
+          [diameter]="30"
+          color="accent"
+        />
+        <ng-template #elseBlock> Create an account </ng-template>
+      </button>
+      <p
+        style="text-align: center;"
+        class="error"
+        *ngIf="error"
+      >
+        {{ this.error }}
+      </p>
+
+    </div>
+  </form>
+</div>

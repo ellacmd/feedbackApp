@@ -1,0 +1,27 @@
+<section>
+  <button class="upvote" (click)="upvote($event)">
+    <img src="../../assets/blue-arrow-up.svg" alt="" />
+
+    {{ feedback.upvotes }}
+  </button>
+
+  <div class="details">
+    <h3>{{ feedback.title }}</h3>
+    <p>{{ feedback.description }}</p>
+
+    <span class="tag">
+      {{
+        feedback.category.length === 2
+          ? feedback.category.toUpperCase()
+          : feedback.category.charAt(0).toUpperCase() +
+            feedback.category.slice(1)
+      }}
+    </span>
+  </div>
+  <div class="comment-box">
+    <button class="comment">
+      <img src="../../assets/comment.svg" alt="" />
+    </button>
+    <p>{{ feedback.commentCount }}</p>
+  </div>
+</section>

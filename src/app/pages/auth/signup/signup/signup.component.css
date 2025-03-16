@@ -1,0 +1,39 @@
+.container {
+  background-color: #fff;
+  width: 600px;
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+
+mat-form-field {
+  width: 100%;
+
+  margin-top: 24px;
+}
+
+button {
+  border-radius: 10px;
+  background: #a337f6;
+  padding: 19px 16px;
+  color: #fff;
+  width: 100%;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+.name-field {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+.name-field > div {
+  width: 100%;
+}

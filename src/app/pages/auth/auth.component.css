@@ -1,0 +1,22 @@
+.auth-container {
+  background-image: radial-gradient(
+    166.82% 166.82% at 103.9% -10.39%,
+    #bd3f5d 0%,
+    #7c33b4 53.09%,
+    #2280b2 100%
+  );
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+}
+.auth-container > div {
+  background-color: #fff;
+  width: 600px;
+  border-radius: 8px;
+}
+.mat-mdc-tab.mdc-tab {
+  padding: 40px;
+}
