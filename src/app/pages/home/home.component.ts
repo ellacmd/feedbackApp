@@ -11,11 +11,11 @@ import {
   GetFeedbackResponse,
   sortCriteria,
 } from '../../types/feedback';
-import { FeedbackCardComponent } from './feedback-card/feedback-card.component';
+import { FeedbackCardComponent } from '../../shared/feedback-card/feedback-card.component';
 import { FeedbackService } from '../../core/services/feedback.service';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { User } from '../../types/user';
+import { AuthResponse, User } from '../../types/user';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   filteredFeedbacks: Feedback[] = [];
   savedFeedbackData = localStorage.getItem('feedbackData');
   apiError = '';
-  user: User = JSON.parse(localStorage.getItem('userData') || '{}');
+  user: AuthResponse = JSON.parse(localStorage.getItem('userData') || '{}');
 
   statusCounts = {
     planned: 0,

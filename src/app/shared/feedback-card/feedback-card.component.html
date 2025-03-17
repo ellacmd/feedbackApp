@@ -1,4 +1,4 @@
-<section>
+<section [style.cursor]="cursorStyle">
   <button class="upvote" (click)="upvote($event)">
     <img src="../../assets/blue-arrow-up.svg" alt="" />
 
@@ -25,3 +25,5 @@
     <p>{{ feedback.commentCount }}</p>
   </div>
 </section>
+
+

@@ -1,0 +1,257 @@
+section {
+  max-width: 730px;
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.back-btn {
+  background-color: transparent;
+  color: #647196;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  gap: 16px;
+}
+.edit-btn {
+  border-radius: 10px;
+  background: #4661e6;
+  color: #f2f4fe;
+  padding: 12.5px 24px;
+  font-weight: 600;
+}
+
+.feedback {
+  width: 100%;
+  min-height: 151px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 49px;
+}
+.upvote {
+  width: 40px;
+  height: 53px;
+  border-radius: 10px;
+  background: #f2f4fe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #3a4374;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.details h3 {
+  font-size: 18px;
+  color: #3a4374;
+  margin-bottom: 5px;
+}
+.details p {
+  font-size: 16px;
+  color: #647196;
+  margin-bottom: 20px;
+}
+.tag {
+  color: #4661e6;
+  font-size: 13px;
+  border-radius: 10px;
+  background: #f2f4ff;
+  padding: 6px 17px;
+  font-weight: 600;
+}
+.comment-box {
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.comment-btn {
+  background-color: transparent;
+}
+.comment-box p {
+  color: #3a4374;
+  font-weight: 700;
+  margin-top: -4px;
+}
+
+.comment-list-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 24px 34px;
+}
+.comment-list-box > h2 {
+  color: #3a4374;
+  font-size: 18px;
+  margin-bottom: 28px;
+}
+
+.heading {
+  display: flex;
+  gap: 14px;
+  align-items: start;
+}
+[data-initials]:before {
+  background: #ad1fea;
+  color: white;
+  opacity: 1;
+  content: attr(data-initials);
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.name h3 {
+  color: #3a4374;
+  font-weight: 700;
+  font-size: 14px;
+}
+.name p {
+  font-size: 14px;
+  color: #647196;
+}
+.heading button {
+  margin-left: auto;
+  color: #4661e6;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: transparent;
+}
+.text {
+  margin-top: 17px;
+  margin-bottom: 32px;
+  color: #647196;
+  font-size: 15px;
+  max-width: 380px;
+  margin-left: auto;
+}
+
+.comment:not(:last-child) {
+  border-bottom: 0.5px solid hsla(231, 20%, 63%, 0.25);
+  margin-bottom: 32px;
+}
+
+.comment.reply {
+  border-bottom: none;
+}
+
+.replies {
+  max-width: 94%;
+  margin-left: auto;
+  position: relative;
+}
+.reply {
+  max-width: 580px;
+  margin-left: auto;
+}
+.reply .text {
+  width: 500px;
+}
+/* 
+.vertical-rule {
+  width: 1px;
+  height: 50%;
+  background-color: hsla(231, 20%, 63%, 0.25);
+  display: inline-block;
+  position: absolute;
+  top: -60px;
+  left: -18px;
+} */
+
+.text span {
+  font-weight: 700;
+  color: #ad1fea;
+}
+.add-comment-box {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 24px 34px;
+}
+textarea {
+  width: 100%;
+  caret-color: #4661e6;
+  border: none;
+  border-radius: 5px;
+  background: #f7f8fd;
+  padding: 18px 24px;
+  font-family: "Jost", sans-serif;
+  color: #3a4374;
+  resize: none;
+}
+textarea:active,
+textarea:focus {
+  border: 1px solid #4661e6;
+  outline: none;
+}
+textarea::placeholder {
+  color: #8c92b3;
+
+  font-size: 15px;
+}
+
+.add-comment-box h2 {
+  color: #3a4374;
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+.add-comment-box > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-comment-box > div p {
+  color: #647196;
+  font-size: 15px;
+}
+.add-comment-box > div button {
+  border-radius: 10px;
+  background: #ad1fea;
+  padding: 12.5px 24px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 27px;
+}
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.error p {
+  color: #ff0000;
+  font-size: 18px;
+}
+.error button {
+  border-radius: 10px;
+  background: #ad1fea;
+  color: #f2f4fe;
+  padding: 12.5px 24px;
+  font-weight: 600;
+}
+.error button:disabled {
+  background-color: #bbb;
+}
+.errorMessage {
+  color: #ff0000;
+}

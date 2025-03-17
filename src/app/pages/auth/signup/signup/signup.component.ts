@@ -55,10 +55,10 @@ export class SignupComponent {
 
     this.authService
       .signup(
-        this!.usernameControl.value?.toLowerCase() || '',
-        this.passwordControl.value?.toLowerCase() || '',
         this.firstNameControl.value?.toLowerCase() || '',
-        this.lastNameControl.value?.toLowerCase() || ''
+        this.lastNameControl.value?.toLowerCase() || '',
+        this!.usernameControl.value?.toLowerCase() || '',
+        this.passwordControl.value?.toLowerCase() || ''
       )
       .pipe(finalize(() => this.loading.next(false)))
       .subscribe({

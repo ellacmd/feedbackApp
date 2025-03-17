@@ -90,6 +90,8 @@
       <app-feedback-card
         *ngFor="let feedback of filteredFeedbacks; index as i"
         [feedback]="feedback"
+        [cursorStyle]="'pointer'"
+        [routerLink]="['details', feedback.id]"
       ></app-feedback-card>
     </div>
     <ng-template #elseBlock>

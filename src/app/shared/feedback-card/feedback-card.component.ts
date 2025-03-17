@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Feedback } from '../../../types/feedback';
+import { Feedback } from '../../types/feedback';
 
 @Component({
   selector: 'app-feedback-card',
@@ -11,6 +11,7 @@ import { Feedback } from '../../../types/feedback';
 export class FeedbackCardComponent {
   @Input()
   feedback!: Feedback;
+  @Input() cursorStyle : string| undefined
 
   upvote(event: { stopPropagation: () => void }) {
     console.log(event);

@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export interface Feedback {
   _id: string;
   user: string;
@@ -9,6 +11,8 @@ export interface Feedback {
   createdAt: string;
   updatedAt: string;
   commentCount: number;
+  id: string;
+  comments: Comment[];
 }
 export interface GetFeedbackResponse {
   productRequests: Feedback[];
@@ -17,8 +21,24 @@ export interface GetFeedbackResponse {
   page: number;
 }
 
+export interface GetSingleFeedbackResponse {
+  productRequest: Feedback;
+}
+
 export type sortCriteria =
   | 'most-upvotes'
   | 'least-upvotes'
   | 'most-comments'
   | 'least-comments';
+
+export interface Comment {
+  createdAt: string;
+  productRequest: string;
+  updatedAt: string;
+  user: User;
+  content: string;
+  replies:Comment[]
+  replyingToUsername:string;
+  replyingTo:string;
+  _id:string;
+}

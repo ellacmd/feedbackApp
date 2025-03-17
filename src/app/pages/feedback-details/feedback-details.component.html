@@ -1,0 +1,121 @@
+<section *ngIf="feedbackDetails">
+  <div class="buttons">
+    <button class="back-btn" routerLink="">
+      <img src="../../assets/arrow-left.svg" alt="" />
+      Go Back
+    </button>
+
+    <button
+      *ngIf="isFeedbackPoster"
+      [routerLink]="['/edit-feedback', 1]"
+      class="edit-btn"
+    >
+      Edit Feedback
+    </button>
+  </div>
+
+  <app-feedback-card [feedback]="feedbackDetails"></app-feedback-card>
+
+  <div class="comment-list-box">
+    <h2>{{ feedbackDetails.commentCount }} Comments</h2>
+
+    <div *ngFor="let comment of feedbackDetails.comments" class="comment">
+      <div class="heading">
+        <div
+          [attr.data-initials]="
+            getUserInitials(comment.user.firstname, comment.user.lastname)
+          "
+        ></div>
+
+        <div class="name">
+          <h3 style="text-transform: capitalize">
+            {{ comment.user.firstname }} {{ comment.user.lastname }}
+          </h3>
+          <p>&#64;{{ comment.user.username }}</p>
+
+          <p class="text">
+            {{ comment.content }}
+          </p>
+        </div>
+        <button
+          (click)="openReplyModal(comment._id, comment.user.username, comment)"
+        >
+          Reply
+        </button>
+      </div>
+
+      <div class="replies">
+        <div class="vertical-rule"></div>
+        <div *ngFor="let reply of comment.replies" class="comment reply">
+          <div class="heading">
+            <div
+              [attr.data-initials]="
+                getUserInitials(reply.user.firstname, reply.user.lastname)
+              "
+            ></div>
+            <div class="name">
+              <h3 style="text-transform: capitalize">
+                {{ reply.user.firstname }} {{ reply.user.lastname }}
+              </h3>
+              <p>&#64;{{ reply.user.username }}</p>
+
+              <p class="text">
+                <span> &#64;{{ reply.replyingToUsername }} </span
+                >{{ reply.content }}
+              </p>
+            </div>
+            <button
+              (click)="openReplyModal(reply._id, reply.user.username, comment)"
+            >
+              Reply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-comment-box">
+    <h2>Add Comment</h2>
+    <textarea
+      [(ngModel)]="input"
+      maxlength="250"
+      placeholder="Type your comment here"
+    ></textarea>
+    <p class="errorMessage" *ngIf="postCommentError">{{ postCommentError }}</p>
+    <div>
+      <p>{{ 250 - input.length }} Characters left</p>
+      <button
+        [disabled]="(loading | async) || !input"
+        (click)="postComment(input)"
+      >
+        Post Comment
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="error" *ngIf="error">
+  <img src="../../../assets/no-feedback.svg" alt="" />
+  <p>
+    Error:
+
+    {{ error }}
+  </p>
+  <button (click)="getFeedbackDetails()" [disabled]="loading | async">
+    <mat-spinner *ngIf="loading | async; else elseBlock" [diameter]="20" />
+    <ng-template #elseBlock> Try again </ng-template>
+  </button>
+</section>
+
+<div
+  *ngIf="loading | async"
+  style="
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+  "
+>
+  <mat-spinner></mat-spinner>
+</div>

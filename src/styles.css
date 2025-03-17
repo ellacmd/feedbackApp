@@ -18,6 +18,9 @@ button {
   outline: none;
   font-family: "Jost", sans-serif;
 }
+button:disabled{
+  cursor: not-allowed;
+}
 
 .select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent;
