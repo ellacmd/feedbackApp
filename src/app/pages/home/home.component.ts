@@ -56,10 +56,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // if (this.savedFeedbackData) {
-    //   this.feedbackData = JSON.parse(this.savedFeedbackData);
-    //   return;
-    // }
     this.getFeedbacks();
   }
   getFeedbacks(): void {
@@ -75,8 +71,7 @@ export class HomeComponent implements OnInit {
         next: (response) => {
           this.feedbackData = response;
           this.filteredFeedbacks = response.productRequests;
-          this.updateStatusCounts();
-          localStorage.setItem('feedbackData', JSON.stringify(response));
+          this.getStatusCount()
         },
         error: ({ error }) => {
           this.apiError = error.message;
@@ -96,16 +91,15 @@ export class HomeComponent implements OnInit {
             (request) => request.category === category.toLowerCase()
           );
 
-    this.updateStatusCounts();
   }
 
-  updateStatusCounts() {
-    this.filteredFeedbacks.forEach((feedback) => {
-      if (feedback.status === 'planned') this.statusCounts.planned++;
-      if (feedback.status === 'in-progress') this.statusCounts['in-progress']++;
-      if (feedback.status === 'live') this.statusCounts.live++;
-    });
-
+  getStatusCount() {
+    this.statusCounts = {
+      planned: this.filteredFeedbacks.filter(f => f.status === 'planned').length,
+      'in-progress': this.filteredFeedbacks.filter(f => f.status === 'in-progress').length,
+      live: this.filteredFeedbacks.filter(f => f.status === 'live').length
+    };
+  
     return this.statusCounts;
   }
 

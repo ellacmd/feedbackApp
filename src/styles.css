@@ -60,3 +60,9 @@ div.mat-mdc-select-panel {
   .mat-mdc-tab {
   height: 60px;
 }
+.add-select .mat-mdc-select-value {
+  color: #3a4374;
+}
+.add-select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background: #f7f8fd ;
+}

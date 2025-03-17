@@ -28,7 +28,7 @@ export class FeedbackService {
     );
   }
 
-  postComment(comment: string, productRequest: string, replyingTo?:string) {
+  postComment(comment: string, productRequest: string, replyingTo?: string) {
     const user = JSON.parse(localStorage.getItem('userData') || '{}');
     const header = new HttpHeaders().set(
       'Authorization',
@@ -40,10 +40,33 @@ export class FeedbackService {
       {
         content: comment,
         productRequest,
-        replyingTo
+        replyingTo,
       },
       headers
     );
   }
 
+  addFeedback(
+    title: string,
+    category: string,
+    description: string,
+    status: string
+  ) {
+    const user = JSON.parse(localStorage.getItem('userData') || '{}');
+    const header = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${user.token}`
+    );
+    const headers = { headers: header };
+    return this.http.post(
+      `${this.baseUrl}product-requests`,
+      {
+        title,
+        category,
+        description,
+        status,
+      },
+      headers
+    );
+  }
 }

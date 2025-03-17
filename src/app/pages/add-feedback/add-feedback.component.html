@@ -1,0 +1,75 @@
+<section>
+  <button class="back-btn" (click)="goBackToPrevPage()">
+    <img src="../../assets/arrow-left.svg" alt="" />
+    Go Back
+  </button>
+
+  <div class="edit-box">
+    <img src="../../assets/add-circle.svg" alt="" />
+    <h2>Create New Feedback</h2>
+
+    <form [formGroup]="addFeedbackForm">
+      <h3>Feedback Title</h3>
+      <p>Add a short, descriptive headline</p>
+      <input formControlName="title" type="text" />
+      <p
+        class="error"
+        *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+      >
+        Title is required!
+      </p>
+
+      <h3 class="top-spacing">Category</h3>
+      <p>Choose a category for your feedback</p>
+      <mat-form-field class="add-select" style="width: 100%">
+        <mat-label>Select an option</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="feature">Feature</mat-option>
+          <mat-option value="ui">UI</mat-option>
+          <mat-option value="ux">UX</mat-option>
+          <mat-option value="enhancement">Enhancement</mat-option>
+          <mat-option value="bug">Bug</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h3 class="top-spacing">Status</h3>
+      <p>Choose a status for your feedback</p>
+      <mat-form-field class="add-select" style="width: 100%">
+        <mat-label>Select an option</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="suggestion">Suggestion</mat-option>
+          <mat-option value="planned">Planned</mat-option>
+          <mat-option value="in-progress">In-progress</mat-option>
+          <mat-option value="live">Live</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h3 class="top-spacing">Feedback Detail</h3>
+      <p>
+        Include any specific comments on what should be improved, added, etc.
+      </p>
+      <textarea formControlName="description"></textarea>
+      <p
+        class="error"
+        *ngIf="
+          description?.invalid && (description?.dirty || description?.touched)
+        "
+      >
+        Please provide details!
+      </p>
+
+      <div class="buttons">
+        <button (click)="goBackToPrevPage()" class="cancel">Cancel</button>
+        <button
+          class="add"
+          (click)="addFeedback()"
+          [disabled]="addFeedbackForm.invalid || (loading | async)"
+        >
+          Add Feedback
+        </button>
+      </div>
+
+      <p class="error">{{ addFeedbackError }}</p>
+    </form>
+  </div>
+</section>
