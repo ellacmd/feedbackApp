@@ -81,9 +81,10 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <a routerLink="/add-feedback" class="feedback-link">
-        <button class="feedback-btn">+ Add Feedback</button>
-      </a>
+
+      <button routerLink="/add-feedback" class="feedback-btn feedback-link">
+        + Add Feedback
+      </button>
     </header>
 
     <div *ngIf="filteredFeedbacks.length; else elseBlock" class="feedback-list">

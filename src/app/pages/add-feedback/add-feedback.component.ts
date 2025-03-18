@@ -29,7 +29,7 @@ import { BehaviorSubject, finalize } from 'rxjs';
     MatFormFieldModule,
   ],
   templateUrl: './add-feedback.component.html',
-  styleUrls: ['./add-feedback.component.css'], // ✅ Fixed incorrect property
+  styleUrls: ['./add-feedback.component.css'], 
 })
 export class AddFeedbackComponent {
   addFeedbackError: string | undefined;

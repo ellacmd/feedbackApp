@@ -13,6 +13,7 @@ import {
 })
 export class FeedbackService {
   baseUrl = environment.apiUrl;
+  user = JSON.parse(localStorage.getItem('userData') || '{}');
 
   constructor(private readonly http: HttpClient) {}
 
@@ -29,10 +30,9 @@ export class FeedbackService {
   }
 
   postComment(comment: string, productRequest: string, replyingTo?: string) {
-    const user = JSON.parse(localStorage.getItem('userData') || '{}');
     const header = new HttpHeaders().set(
       'Authorization',
-      `Bearer ${user.token}`
+      `Bearer ${this.user.token}`
     );
     const headers = { headers: header };
     return this.http.post(
@@ -64,6 +64,21 @@ export class FeedbackService {
         title,
         category,
         description,
+        status,
+      },
+      headers
+    );
+  }
+
+  updateFeedback(status: string, id: string) {
+    const header = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.user.token}`
+    );
+    const headers = { headers: header };
+    return this.http.put(
+      `${this.baseUrl}product-requests/${id}`,
+      {
         status,
       },
       headers

@@ -4,6 +4,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { authGuard } from './core/guards/auth.guard';
 import { FeedbackDetailsComponent } from './pages/feedback-details/feedback-details.component';
 import { AddFeedbackComponent } from './pages/add-feedback/add-feedback.component';
+import { RoadmapComponent } from './pages/roadmap/roadmap.component';
 
 export const routes: Routes = [
   {
@@ -24,5 +25,10 @@ export const routes: Routes = [
     path: 'add-feedback',
     component: AddFeedbackComponent,
     title: 'Add Feedback',
+  },
+  {
+    path: 'roadmap',
+    component: RoadmapComponent,
+    title: 'Roadmap',
   },
 ];

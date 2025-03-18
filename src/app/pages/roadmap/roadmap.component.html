@@ -1,0 +1,164 @@
+<section *ngIf="!(loading | async) && !error">
+  <div class="header">
+    <div>
+      <button (click)="goBackToPrevPage()">
+        <img src="../../assets/arrow-left-light.svg" alt="" /> &nbsp; Go Back
+      </button>
+
+      <h2>Roadmap</h2>
+    </div>
+
+    <button routerLink="/add-feedback" class="add-feedback">
+      + Add Feedback
+    </button>
+  </div>
+
+  <div class="content" cdkDropListGroup>
+    <div class="column">
+      <h3>Planned ({{ planned.length }})</h3>
+      <p>Ideas prioritized for research</p>
+      <div
+        cdkDropList
+        [cdkDropListData]="planned"
+        (cdkDropListDropped)="drop($event)"
+        id="planned"
+        class="item-list"
+      >
+        <div class="item-box planned" *ngFor="let item of planned" cdkDrag>
+          <div>
+            <p><span></span> {{ item.status }}</p>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+
+            <p class="category">
+              {{
+                item.category.length === 2
+                  ? item.category.toUpperCase()
+                  : item.category.charAt(0).toUpperCase() +
+                    item.category.slice(1)
+              }}
+            </p>
+
+            <div class="buttons">
+              <button class="upvote">
+                <img src="../../assets/blue-arrow-up.svg" alt="" />
+                {{ item.upvotes }}
+              </button>
+              <div class="comments">
+                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <h3>In-Progress ({{ inProgress.length }})</h3>
+      <p>Currently being developed</p>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="inProgress"
+        (cdkDropListDropped)="drop($event)"
+        id="in-progress"
+        class="item-list"
+      >
+        <div
+          class="item-box in-progress"
+          *ngFor="let item of inProgress"
+          cdkDrag
+        >
+          <div>
+            <p><span></span> {{ item.status }}</p>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+
+            <p class="category">
+              {{
+                item.category.length === 2
+                  ? item.category.toUpperCase()
+                  : item.category.charAt(0).toUpperCase() +
+                    item.category.slice(1)
+              }}
+            </p>
+
+            <div class="buttons">
+              <button class="upvote">
+                <img src="../../assets/blue-arrow-up.svg" alt="" />
+                {{ item.upvotes }}
+              </button>
+              <div class="comments">
+                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <h3>Live ({{ live.length }})</h3>
+      <p>Released features</p>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="live"
+        (cdkDropListDropped)="drop($event)"
+        id="live"
+        class="item-list"
+      >
+        <div class="item-box live" *ngFor="let item of live" cdkDrag>
+          <div>
+            <p><span></span> {{ item.status }}</p>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+
+            <p class="category">
+              {{
+                item.category.length === 2
+                  ? item.category.toUpperCase()
+                  : item.category.charAt(0).toUpperCase() +
+                    item.category.slice(1)
+              }}
+            </p>
+
+            <div class="buttons">
+              <button class="upvote">
+                <img src="../../assets/blue-arrow-up.svg" alt="" />
+                {{ item.upvotes }}
+              </button>
+              <div class="comments">
+                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="error" *ngIf="error">
+  <img src="../../../assets/no-feedback.svg" alt="" />
+  <p>
+    Error:
+
+    {{ error }}
+  </p>
+  <button (click)="getFeedbacks()" [disabled]="loading | async">
+    <mat-spinner *ngIf="loading | async; else elseBlock" [diameter]="20" />
+    <ng-template #elseBlock> Try again </ng-template>
+  </button>
+</section>
+
+<div
+  *ngIf="loading | async"
+  style="
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+  "
+>
+  <mat-spinner></mat-spinner>
+</div>
