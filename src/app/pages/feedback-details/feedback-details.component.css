@@ -179,7 +179,8 @@ section {
   font-weight: 700;
   color: #ad1fea;
 }
-.add-comment-box {
+.add-comment-box,
+.add-reply-box {
   width: 100%;
   background-color: #fff;
   border-radius: 10px;
@@ -212,7 +213,8 @@ textarea::placeholder {
   font-size: 18px;
   margin-bottom: 24px;
 }
-.add-comment-box > div {
+.add-comment-box > div,
+.add-reply-box > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -230,6 +232,27 @@ textarea::placeholder {
   font-size: 14px;
   margin-top: 27px;
 }
+.add-reply-box {
+  padding-left: 60px;
+  padding-right: 0;
+}
+.add-reply-box > div {
+  gap: 12px;
+  align-items: start;
+}
+.add-reply-box textarea {
+  width: 80%;
+}
+.reply-btn {
+  border-radius: 10px;
+  background: #ad1fea;
+  padding: 6px 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  max-width: 400px;
+}
+
 .error {
   display: flex;
   justify-content: center;

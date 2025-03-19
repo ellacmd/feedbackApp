@@ -9,11 +9,12 @@ import {
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FeedbackService } from '../../core/services/feedback.service';
-import { BehaviorSubject, finalize } from 'rxjs';
-import { Feedback } from '../../types/feedback';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import { Feedback, GetFeedbackResponse } from '../../types/feedback';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthResponse } from '../../types/user';
 
 @Component({
   selector: 'app-roadmap',
@@ -31,25 +32,41 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class RoadmapComponent implements OnInit {
   loading = new BehaviorSubject<boolean>(false);
+  upvoteLoading = new BehaviorSubject<boolean>(false);
   error = '';
   planned: Feedback[] = [];
   inProgress: Feedback[] = [];
   live: Feedback[] = [];
+  user: AuthResponse = JSON.parse(localStorage.getItem('userData') || '{}');
+  feedbackData$: Observable<GetFeedbackResponse | null>;
 
   constructor(
     private readonly feedbackService: FeedbackService,
     private snackBar: MatSnackBar,
     private location: Location
-  ) {}
+  ) {
+    this.feedbackData$ = this.feedbackService.feedbackData$;
+  }
 
   ngOnInit(): void {
-    this.getFeedbacks();
-  }
+    this.feedbackData$.subscribe((response) => {
+      if (!response) {
+        this.getFeedbacks();
+      } else {
+        if (!response?.productRequests) return;
 
-  goBackToPrevPage(): void {
-    this.location.back();
+        this.planned = response.productRequests.filter(
+          (feedback) => feedback.status === 'planned'
+        );
+        this.inProgress = response.productRequests.filter(
+          (feedback) => feedback.status === 'in-progress'
+        );
+        this.live = response.productRequests.filter(
+          (feedback) => feedback.status === 'live'
+        );
+      }
+    });
   }
-
   getFeedbacks(): void {
     this.loading.next(true);
     this.feedbackService
@@ -60,21 +77,13 @@ export class RoadmapComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (response) => {
-          this.planned = response.productRequests.filter(
-            (request) => request.status === 'planned'
-          );
-          this.inProgress = response.productRequests.filter(
-            (request) => request.status === 'in-progress'
-          );
-          this.live = response.productRequests.filter(
-            (request) => request.status === 'live'
-          );
-        },
         error: ({ error }) => {
           this.error = error.message;
         },
       });
+  }
+  goBackToPrevPage(): void {
+    this.location.back();
   }
 
   drop(event: CdkDragDrop<Feedback[]>) {
@@ -129,5 +138,21 @@ export class RoadmapComponent implements OnInit {
     if (containerId.includes('in-progress')) return 'in-progress';
     if (containerId.includes('live')) return 'live';
     return null;
+  }
+
+  upvote(feedback: Feedback) {
+    this.upvoteLoading.next(true);
+
+    this.feedbackService.toggleUpvote(feedback._id).subscribe({
+      next: (response) => {
+        this.upvoteLoading.next(true);
+        feedback.upvotes = response.productRequest.upvotes;
+        feedback.upvotedBy = response.productRequest.upvotedBy;
+      },
+      error: (error) => {
+        console.error('Error toggling upvote:', error);
+        this.upvoteLoading.next(false);
+      },
+    });
   }
 }

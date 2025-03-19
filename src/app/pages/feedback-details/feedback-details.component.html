@@ -7,7 +7,7 @@
 
     <button
       *ngIf="isFeedbackPoster"
-      [routerLink]="['/edit-feedback', 1]"
+      [routerLink]="['/edit-feedback', feedbackId]"
       class="edit-btn"
     >
       Edit Feedback
@@ -37,10 +37,8 @@
             {{ comment.content }}
           </p>
         </div>
-        <button
-          (click)="openReplyModal(comment._id, comment.user.username, comment)"
-        >
-          Reply
+        <button (click)="showReplyBox(comment._id,comment._id, comment.user.username)">
+          {{ activeReplyBoxId === comment._id ? "Cancel" : "Reply" }}
         </button>
       </div>
 
@@ -64,13 +62,32 @@
                 >{{ reply.content }}
               </p>
             </div>
-            <button
-              (click)="openReplyModal(reply._id, reply.user.username, comment)"
-            >
-              Reply
+            <button (click)="showReplyBox(comment._id, reply._id, reply.user.username)">
+              {{ activeReplyBoxId === reply._id ? "Cancel" : "Reply" }}
             </button>
           </div>
         </div>
+      </div>
+      <div *ngIf="activeParentCommentId === comment._id" class="add-reply-box">
+        <p>Replying to <strong style="color: #ad1fea;">&#64;{{ replyingToUsername }}</strong></p>
+
+        <div>
+          <textarea
+            [(ngModel)]="replyInput"
+            maxlength="250"
+            placeholder="Type your reply here"
+          ></textarea>
+          <button
+            class="reply-btn"
+            [disabled]="(loading | async) || !replyInput"
+            (click)="postComment(replyInput, comment._id)"
+          >
+            Post Reply
+          </button>
+        </div>
+        <p class="errorMessage" *ngIf="replyError">
+          {{ replyError }}
+        </p>
       </div>
     </div>
   </div>
@@ -78,16 +95,16 @@
   <div class="add-comment-box">
     <h2>Add Comment</h2>
     <textarea
-      [(ngModel)]="input"
+      [(ngModel)]="commentInput"
       maxlength="250"
       placeholder="Type your comment here"
     ></textarea>
     <p class="errorMessage" *ngIf="postCommentError">{{ postCommentError }}</p>
     <div>
-      <p>{{ 250 - input.length }} Characters left</p>
+      <p>{{ 250 - commentInput.length }} Characters left</p>
       <button
-        [disabled]="(loading | async) || !input"
-        (click)="postComment(input)"
+        [disabled]="(loading | async) || !commentInput"
+        (click)="postComment(commentInput)"
       >
         Post Comment
       </button>

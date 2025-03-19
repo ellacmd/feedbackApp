@@ -1,6 +1,11 @@
 <section [style.cursor]="cursorStyle">
-  <button class="upvote" (click)="upvote($event)">
-    <img src="../../assets/blue-arrow-up.svg" alt="" />
+  <button
+    class="upvote"
+    [ngClass]="{ upvoted: isUpvoted }"
+    (click)="upvote($event)"
+  >
+    <img *ngIf="!isUpvoted" src="../../assets/blue-arrow-up.svg" alt="" />
+    <img *ngIf="isUpvoted" src="../../assets/arrow-up.svg" alt="" />
 
     {{ feedback.upvotes }}
   </button>
@@ -25,5 +30,3 @@
     <p>{{ feedback.commentCount }}</p>
   </div>
 </section>
-
-

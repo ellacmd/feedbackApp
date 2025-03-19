@@ -13,6 +13,7 @@ export interface Feedback {
   commentCount: number;
   id: string;
   comments: Comment[];
+  upvotedBy: string[]
 }
 export interface GetFeedbackResponse {
   productRequests: Feedback[];

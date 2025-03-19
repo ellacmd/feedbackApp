@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReplyModalComponent } from './reply-modal.component';
+import { EditFeedbackComponent } from './edit-feedback.component';
 
-describe('ReplyModalComponent', () => {
-  let component: ReplyModalComponent;
-  let fixture: ComponentFixture<ReplyModalComponent>;
+describe('EditFeedbackComponent', () => {
+  let component: EditFeedbackComponent;
+  let fixture: ComponentFixture<EditFeedbackComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReplyModalComponent]
+      imports: [EditFeedbackComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReplyModalComponent);
+    fixture = TestBed.createComponent(EditFeedbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,9 +1,9 @@
-<div *ngIf="feedbackData" class="container">
+<div *ngIf="feedbackData$ && !apiError && !(loading | async)" class="container">
   <div class="sidebar">
     <div class="header">
       <h3>Feedback Board</h3>
 
-      <div *ngIf="!user.token" class="login">
+      <div *ngIf="!user?.token" class="login">
         <button routerLink="/auth">
           Login
           <mat-icon
@@ -14,9 +14,9 @@
         </button>
       </div>
 
-      <div *ngIf="user.token" class="logout">
+      <div *ngIf="user?.token" class="logout">
         <p style="font-weight: 500; text-transform: capitalize">
-          Hello {{ user.user.firstname }}
+          Hello {{ user?.user?.firstname }}
         </p>
 
         <button (click)="logout()">
@@ -44,7 +44,7 @@
       <div class="title">
         <h3>Roadmap</h3>
         <a routerLink="/roadmap">
-          <button>View</button>
+          <button routerLink="roadmap">View</button>
         </a>
       </div>
       <ul>
@@ -64,7 +64,7 @@
     <header>
       <img src="../../../assets/bulb.svg" />
 
-      <h2>{{ feedbackData.count }} Suggestions</h2>
+      <h2>{{ (feedbackData$ | async)?.count }} Suggestions</h2>
 
       <div class="select">
         <p>Sort By :</p>
@@ -110,4 +110,14 @@
     </ng-template>
   </div>
 </div>
-<mat-spinner *ngIf="loading | async"></mat-spinner>
+<div
+  *ngIf="loading | async"
+  style="
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+  "
+>
+  <mat-spinner></mat-spinner>
+</div>

@@ -4,13 +4,14 @@ import { Feedback } from '../../types/feedback';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FeedbackService } from '../../core/services/feedback.service';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { BehaviorSubject, finalize, firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FeedbackCardComponent } from '../../shared/feedback-card/feedback-card.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { ReplyModalComponent } from '../../shared/reply-modal/reply-modal.component';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthResponse } from '../../types/user';
 
 @Component({
   selector: 'app-feedback-details',
@@ -27,12 +28,18 @@ import { ReplyModalComponent } from '../../shared/reply-modal/reply-modal.compon
 export class FeedbackDetailsComponent {
   feedbackId: string | null = null;
   feedbackDetails: Feedback | undefined;
-  input = '';
+  commentInput = '';
+  replyInput = '';
   isFeedbackPoster: boolean | undefined;
   loading = new BehaviorSubject<boolean>(false);
   postingComment = new BehaviorSubject<boolean>(false);
   error = '';
   postCommentError = '';
+  replyError = '';
+  user: AuthResponse | null = null;
+  activeReplyBoxId: string | null = null;
+  replyingToUsername: string | null = '';
+  activeParentCommentId: string | null = null;
 
   private _snackBar = inject(MatSnackBar);
 
@@ -50,23 +57,30 @@ export class FeedbackDetailsComponent {
   constructor(
     private readonly feedbackService: FeedbackService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {}
-
-  openReplyModal(commentId: string, replyingToUsername: string, comment:any): void {
-    console.log(comment._id, comment);
-    const dialogRef = this.dialog.open(ReplyModalComponent, {
-      width: '400px',
-      data: { commentId, replyingToUsername },
-    });
-
-    dialogRef.afterClosed().subscribe((replyText) => {
-      if (replyText && this.feedbackDetails) {
-        this.postComment(replyText, commentId);
-      }
+    private dialog: MatDialog,
+    private readonly authService: AuthService
+  ) {
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
     });
   }
 
+  showReplyBox(
+    parentCommentId: string,
+    replyId: string | null,
+    username: string
+  ): void {
+    console.log(username);
+    if (this.activeReplyBoxId === replyId) {
+      this.activeReplyBoxId = null;
+      this.activeParentCommentId = null;
+      this.replyingToUsername = null;
+    } else {
+      this.activeReplyBoxId = replyId;
+      this.activeParentCommentId = parentCommentId;
+      this.replyingToUsername = username;
+    }
+  }
   getFeedbackDetails(): void {
     if (!this.feedbackId) return;
     this.loading.next(true);
@@ -82,8 +96,7 @@ export class FeedbackDetailsComponent {
         next: ({ productRequest }) => {
           this.feedbackDetails = productRequest;
           this.isFeedbackPoster =
-            this.feedbackDetails.user ===
-            JSON.parse(localStorage.getItem('userData') || '{}').user.id;
+            this.feedbackDetails.user === this.user?.user?.id;
         },
         error: ({ error }: HttpErrorResponse) => {
           this.error = error.message;
@@ -93,15 +106,23 @@ export class FeedbackDetailsComponent {
 
   postComment(comment: string, replyingTo?: string) {
     if (!this.feedbackDetails) return;
-this.postingComment.next(true)
+    this.postingComment.next(true);
     this.feedbackService
-      .postComment(comment, this.feedbackDetails.id, replyingTo).pipe(finalize(()=>{
-        this.postingComment.next(false)
-      }))
+      .postComment(comment, this.feedbackDetails.id, replyingTo)
+      .pipe(
+        finalize(() => {
+          this.postingComment.next(false);
+        })
+      )
       .subscribe({
         next: () => {
-          this.input=''
+          this.commentInput = '';
+          this.replyInput=''
           this._snackBar.open('Comment posted!', '', { duration: 3000 });
+          this.activeReplyBoxId = null;
+          this.activeParentCommentId = null;
+          this.replyingToUsername = null;
+       
           this.getFeedbackDetails();
         },
         error: ({ error }: HttpErrorResponse) => {

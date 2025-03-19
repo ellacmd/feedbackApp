@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   Feedback,
@@ -16,6 +16,7 @@ import { FeedbackService } from '../../core/services/feedback.service';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse, User } from '../../types/user';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -37,11 +38,10 @@ export class HomeComponent implements OnInit {
   readonly categories = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
   selectedCategory: string = 'All';
   loading = new BehaviorSubject<boolean>(false);
-  feedbackData: GetFeedbackResponse | undefined;
+  feedbackData$: Observable<GetFeedbackResponse | null>;
   filteredFeedbacks: Feedback[] = [];
-  savedFeedbackData = localStorage.getItem('feedbackData');
   apiError = '';
-  user: AuthResponse = JSON.parse(localStorage.getItem('userData') || '{}');
+  user: AuthResponse | null = null;
 
   statusCounts = {
     planned: 0,
@@ -52,13 +52,29 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly feedbackService: FeedbackService,
-    private readonly router: Router
-  ) {}
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) {
+    this.feedbackData$ = this.feedbackService.feedbackData$;
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   ngOnInit(): void {
-    this.getFeedbacks();
+    this.feedbackData$.subscribe((data) => {
+      if (!data) {
+        this.getFeedbacks();
+      } else {
+        this.filteredFeedbacks = data.productRequests;
+        this.getStatusCount();
+        this.sortFeedback('most-upvotes');
+      }
+    });
   }
   getFeedbacks(): void {
+
+
     this.loading.next(true);
     this.feedbackService
       .getFeedbackData()
@@ -68,11 +84,6 @@ export class HomeComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (response) => {
-          this.feedbackData = response;
-          this.filteredFeedbacks = response.productRequests;
-          this.getStatusCount()
-        },
         error: ({ error }) => {
           this.apiError = error.message;
         },
@@ -82,29 +93,35 @@ export class HomeComponent implements OnInit {
   sortByCategory(category: string): void {
     this.selectedCategory = category;
 
-    if (!this.feedbackData) return;
+    if (!this.feedbackData$) return;
 
-    this.filteredFeedbacks =
-      category === 'All'
-        ? this.feedbackData.productRequests
-        : this.feedbackData.productRequests.filter(
-            (request) => request.category === category.toLowerCase()
-          );
-
+    this.feedbackData$.subscribe((feedbackData) => {
+      if (!feedbackData) return;
+      this.filteredFeedbacks =
+        category === 'All'
+          ? feedbackData.productRequests
+          : feedbackData.productRequests.filter(
+              (request) =>
+                request.category.toLowerCase() === category.toLowerCase()
+            );
+    });
   }
 
   getStatusCount() {
     this.statusCounts = {
-      planned: this.filteredFeedbacks.filter(f => f.status === 'planned').length,
-      'in-progress': this.filteredFeedbacks.filter(f => f.status === 'in-progress').length,
-      live: this.filteredFeedbacks.filter(f => f.status === 'live').length
+      planned: this.filteredFeedbacks.filter((f) => f.status === 'planned')
+        .length,
+      'in-progress': this.filteredFeedbacks.filter(
+        (f) => f.status === 'in-progress'
+      ).length,
+      live: this.filteredFeedbacks.filter((f) => f.status === 'live').length,
     };
-  
+
     return this.statusCounts;
   }
 
   sortFeedback(criteria: sortCriteria): void {
-    if (!this.feedbackData) return;
+    if (!this.feedbackData$) return;
 
     this.filteredFeedbacks.sort((a, b) => {
       switch (criteria) {
@@ -123,7 +140,7 @@ export class HomeComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('userData');
+    this.authService.setUser(null);
     this.router.navigate(['auth'], { replaceUrl: true });
   }
 }

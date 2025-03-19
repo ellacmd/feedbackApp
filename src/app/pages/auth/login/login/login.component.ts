@@ -71,7 +71,7 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           this.router.navigate([''], { replaceUrl: true });
-          localStorage.setItem('userData', JSON.stringify(response));
+          this.authService.setUser(response);
         },
         error: ({ error }: HttpErrorResponse) => {
           this.error = error.message;

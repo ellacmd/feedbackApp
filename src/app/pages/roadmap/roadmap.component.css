@@ -142,3 +142,14 @@ p {
   gap: 8px;
   font-size: 16px;
 }
+
+.upvoted{
+  color:#fff;
+  background-color: #4661e6;
+}
+.upvote.upvoted:hover {
+  background-color: #4661e6;
+}
+.upvote:hover {
+  background-color: #cfd7ff;
+}

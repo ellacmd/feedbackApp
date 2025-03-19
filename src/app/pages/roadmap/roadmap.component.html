@@ -40,8 +40,21 @@
             </p>
 
             <div class="buttons">
-              <button class="upvote">
-                <img src="../../assets/blue-arrow-up.svg" alt="" />
+              <button
+                class="upvote"
+                [ngClass]="{ upvoted: item.upvotedBy.includes(user.user.id) }"
+                (click)="upvote(item)"
+              >
+                <img
+                  *ngIf="!item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/blue-arrow-up.svg"
+                  alt=""
+                />
+                <img
+                  *ngIf="item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/arrow-up.svg"
+                  alt=""
+                />
                 {{ item.upvotes }}
               </button>
               <div class="comments">
@@ -84,8 +97,21 @@
             </p>
 
             <div class="buttons">
-              <button class="upvote">
-                <img src="../../assets/blue-arrow-up.svg" alt="" />
+              <button
+                class="upvote"
+                [ngClass]="{ upvoted: item.upvotedBy.includes(user.user.id) }"
+                (click)="upvote(item)"
+              >
+                <img
+                  *ngIf="!item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/blue-arrow-up.svg"
+                  alt=""
+                />
+                <img
+                  *ngIf="item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/arrow-up.svg"
+                  alt=""
+                />
                 {{ item.upvotes }}
               </button>
               <div class="comments">
@@ -124,8 +150,21 @@
             </p>
 
             <div class="buttons">
-              <button class="upvote">
-                <img src="../../assets/blue-arrow-up.svg" alt="" />
+              <button
+                class="upvote"
+                [ngClass]="{ upvoted: item.upvotedBy.includes(user.user.id) }"
+                (click)="upvote(item)"
+              >
+                <img
+                  *ngIf="!item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/blue-arrow-up.svg"
+                  alt=""
+                />
+                <img
+                  *ngIf="item.upvotedBy.includes(user.user.id)"
+                  src="../../assets/arrow-up.svg"
+                  alt=""
+                />
                 {{ item.upvotes }}
               </button>
               <div class="comments">

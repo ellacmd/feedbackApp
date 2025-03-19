@@ -29,7 +29,7 @@ import { BehaviorSubject, finalize } from 'rxjs';
     MatFormFieldModule,
   ],
   templateUrl: './add-feedback.component.html',
-  styleUrls: ['./add-feedback.component.css'], 
+  styleUrls: ['./add-feedback.component.css'],
 })
 export class AddFeedbackComponent {
   addFeedbackError: string | undefined;
@@ -67,7 +67,8 @@ export class AddFeedbackComponent {
       )
       .subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          this.location.back();
+          this.feedbackService.refreshFeedback();
         },
         error: ({ error }) => {
           this.addFeedbackError = error.message;
