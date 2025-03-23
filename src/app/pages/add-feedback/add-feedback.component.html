@@ -14,9 +14,13 @@
       <input formControlName="title" type="text" />
       <p
         class="error"
-        *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+        *ngIf="
+          addFeedbackForm.get('title')?.invalid &&
+          (addFeedbackForm.get('title')?.dirty ||
+            addFeedbackForm.get('title')?.touched)
+        "
       >
-        Title is required!
+        Title is required! (Max length: 50)
       </p>
 
       <h3 class="top-spacing">Category</h3>
@@ -48,14 +52,16 @@
       <p>
         Include any specific comments on what should be improved, added, etc.
       </p>
-      <textarea formControlName="description"></textarea>
+      <textarea formControlName="description" ></textarea>
       <p
         class="error"
         *ngIf="
-          description?.invalid && (description?.dirty || description?.touched)
+          addFeedbackForm.get('description')?.invalid &&
+          (addFeedbackForm.get('description')?.dirty ||
+            addFeedbackForm.get('description')?.touched)
         "
       >
-        Please provide details!
+        Please provide details! (Max length: 500)
       </p>
 
       <div class="buttons">

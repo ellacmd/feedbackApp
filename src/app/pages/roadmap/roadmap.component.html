@@ -27,8 +27,8 @@
         <div class="item-box planned" *ngFor="let item of planned" cdkDrag>
           <div>
             <p><span></span> {{ item.status }}</p>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
+            <h3 class="truncated-text">{{ item.title }}</h3>
+            <p class="truncated-text">{{ item.description }}</p>
 
             <p class="category">
               {{
@@ -58,7 +58,9 @@
                 {{ item.upvotes }}
               </button>
               <div class="comments">
-                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+                <img src="../../assets/comment.svg" alt="" />
+                
+                {{ item.commentCount }}
               </div>
             </div>
           </div>
@@ -84,8 +86,8 @@
         >
           <div>
             <p><span></span> {{ item.status }}</p>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
+            <h3 class="truncated-text">{{ item.title }}</h3>
+            <p class="truncated-text">{{ item.description }}</p>
 
             <p class="category">
               {{
@@ -115,7 +117,8 @@
                 {{ item.upvotes }}
               </button>
               <div class="comments">
-                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+                <img src="../../assets/comment.svg" alt="" />  
+                  {{ item.commentCount }}
               </div>
             </div>
           </div>
@@ -137,8 +140,8 @@
         <div class="item-box live" *ngFor="let item of live" cdkDrag>
           <div>
             <p><span></span> {{ item.status }}</p>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
+            <h3 class="truncated-text">{{ item.title }}</h3>
+            <p class="truncated-text">{{ item.description }}</p>
 
             <p class="category">
               {{
@@ -168,13 +171,187 @@
                 {{ item.upvotes }}
               </button>
               <div class="comments">
-                <img src="../../assets/comment.svg" alt="" />{{ item.comments }}
+                <img src="../../assets/comment.svg" alt="" />{{item.commentCount }}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="mobile-content">
+    <mat-tab-group class="custom-tab-group">
+
+      
+      <mat-tab
+        [label]="'Planned (' + planned.length + ')'"
+        labelClass="planned-tab"
+      >
+        <div class="column">
+          <h3>Planned ({{ planned.length }})</h3>
+          <p>Ideas prioritized for research</p>
+          <div class="item-list">
+            <div class="item-box planned" *ngFor="let item of planned" >
+              <div>
+                <p><span></span> {{ item.status }}</p>
+                <h3 class="truncated-text">{{ item.title }}</h3>
+                <p class="truncated-text">{{ item.description }}</p>
+
+                <p class="category">
+                  {{
+                    item.category.length === 2
+                      ? item.category.toUpperCase()
+                      : item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                  }}
+                </p>
+
+                <div class="buttons">
+                  <button
+                    class="upvote"
+                    [ngClass]="{
+                      upvoted: item.upvotedBy.includes(user.user.id)
+                    }"
+                    (click)="upvote(item)"
+                  >
+                    <img
+                      *ngIf="!item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/blue-arrow-up.svg"
+                      alt=""
+                    />
+                    <img
+                      *ngIf="item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/arrow-up.svg"
+                      alt=""
+                    />
+                    {{ item.upvotes }}
+                  </button>
+                  <div class="comments">
+                    <img src="../../assets/comment.svg" alt="" />{{
+                  item.commentCount
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+
+      <mat-tab
+        [label]="'In-Progress (' + inProgress.length + ')'"
+        labelClass="in-progress-tab"
+      >
+        <div class="column">
+          <h3>In-Progress ({{ inProgress.length }})</h3>
+          <p>Currently being developed</p>
+
+          <div class="item-list">
+            <div
+              class="item-box in-progress"
+              *ngFor="let item of inProgress"
+              
+            >
+              <div>
+                <p><span></span> {{ item.status }}</p>
+                <h3 class="truncated-text">{{ item.title }}</h3>
+                <p class="truncated-text">{{ item.description }}</p>
+
+                <p class="category">
+                  {{
+                    item.category.length === 2
+                      ? item.category.toUpperCase()
+                      : item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                  }}
+                </p>
+
+                <div class="buttons">
+                  <button
+                    class="upvote"
+                    [ngClass]="{
+                      upvoted: item.upvotedBy.includes(user.user.id)
+                    }"
+                    (click)="upvote(item)"
+                  >
+                    <img
+                      *ngIf="!item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/blue-arrow-up.svg"
+                      alt=""
+                    />
+                    <img
+                      *ngIf="item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/arrow-up.svg"
+                      alt=""
+                    />
+                    {{ item.upvotes }}
+                  </button>
+                  <div class="comments">
+                    <img src="../../assets/comment.svg" alt="" />{{
+                  item.commentCount
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'Live (' + live.length + ')'" labelClass="live-tab">
+        <div class="column">
+          <h3>Live ({{ live.length }})</h3>
+          <p>Released features</p>
+
+          <div class="item-list">
+            <div class="item-box live" *ngFor="let item of live" >
+              <div>
+                <p><span></span> {{ item.status }}</p>
+                <h3 class="truncated-text">{{ item.title }}</h3>
+                <p class="truncated-text">{{ item.description }}</p>
+
+                <p class="category">
+                  {{
+                    item.category.length === 2
+                      ? item.category.toUpperCase()
+                      : item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                  }}
+                </p>
+
+                <div class="buttons">
+                  <button
+                    class="upvote"
+                    [ngClass]="{
+                      upvoted: item.upvotedBy.includes(user.user.id)
+                    }"
+                    (click)="upvote(item)"
+                  >
+                    <img
+                      *ngIf="!item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/blue-arrow-up.svg"
+                      alt=""
+                    />
+                    <img
+                      *ngIf="item.upvotedBy.includes(user.user.id)"
+                      src="../../assets/arrow-up.svg"
+                      alt=""
+                    />
+                    {{ item.upvotes }}
+                  </button>
+                  <div class="comments">
+                    <img src="../../assets/comment.svg" alt="" />{{
+                    item.commentCount
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </section>
 <section class="error" *ngIf="error">

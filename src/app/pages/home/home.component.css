@@ -3,6 +3,7 @@
   gap: 30px;
   min-height: 100vh;
   padding: 60px;
+  width: 100%;
 }
 .sidebar {
   width: 25%;
@@ -18,8 +19,11 @@
     #28a7ed 100%
   );
   border-radius: 10px;
-  padding: 66px 24px 24px;
+  padding: 70px 24px 24px;
   color: #fff;
+}
+.mobile-header {
+  display: none;
 }
 .content {
   width: 75%;
@@ -53,7 +57,7 @@
 }
 .roadmap {
   background-color: #fff;
-  padding: 19px 24px;
+  padding: 14px 24px;
   border-radius: 10px;
 }
 
@@ -214,4 +218,160 @@ mat-spinner {
 .icon {
   font-size: 16px;
   margin-top: 4px;
+}
+
+.select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent;
+}
+.select .mat-mdc-select-value,
+.select .mat-mdc-select-placeholder,
+.select .mat-mdc-select-arrow {
+  color: #fff;
+}
+
+.select
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+  .mdc-line-ripple::before {
+  border: none;
+  background-color: transparent;
+}
+
+.select .mat-mdc-select-value,
+.select .mat-mdc-select-placeholder,
+.select .mat-mdc-select-arrow {
+  width: 80%;
+}
+
+.mat-mdc-form-field-infix {
+  width: 145px !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper,
+.mat-mdc-form-field-bottom-align::before {
+  display: none;
+}
+
+@media (max-width: 1055px) {
+  .container {
+    padding: 60px 30px;
+  }
+}
+
+@media (max-width: 997px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: start;
+  }
+
+  .content {
+    width: 100%;
+  }
+  .categories,
+  .roadmap,
+  .header {
+    flex: 1;
+  }
+}
+
+@media (max-width: 780px) {
+  .sidebar {
+    display: none;
+  }
+  .container {
+    padding: 0;
+  }
+
+  header {
+    border-radius: 0;
+    padding: 18px 24px;
+    margin-top: 126px;
+    position: fixed;
+    width: 100%;
+  }
+  header h2 {
+    font-size: 18px;
+  }
+  .feedback-btn {
+    padding: 10.5px 16px;
+  }
+
+  .feedback-list,
+  .no-feedback {
+    padding: 24px;
+    margin-top: 220px;
+  }
+
+  .mobile-header {
+    background-image: radial-gradient(
+      166.82% 166.82% at 103.9% -10.39%,
+      #e84d70 0%,
+      #a337f6 53.09%,
+      #28a7ed 100%
+    );
+    padding: 24px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .container {
+    gap: 0;
+  }
+  .sidenav-container {
+    height: 100vh;
+  }
+
+  .mat-drawer-transition .mat-drawer-backdrop {
+    position: absolute;
+    top: 126px;
+  }
+
+  .mat-drawer.mat-drawer-end {
+    border-radius: 0 !important;
+  }
+  .mat-drawer-inner-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  .categories {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 619px) {
+  header > img,
+  header > h2 {
+    display: none;
+  }
+  .mat-mdc-select-value-text {
+    font-weight: bold;
+  }
+  .mat-mdc-select-value-text {
+    font-weight: bold;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  header {
+    padding: 18px 24px;
+  }
+  .feedback-btn,
+  .select > p {
+    font-size: 13px;
+  }
+  .select > p {
+    margin-right: 2.5px;
+  }
+  .mdc-text-field {
+    padding: 0 !important;
+  }
 }

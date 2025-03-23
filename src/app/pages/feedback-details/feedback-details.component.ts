@@ -57,7 +57,6 @@ export class FeedbackDetailsComponent {
   constructor(
     private readonly feedbackService: FeedbackService,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
     private readonly authService: AuthService
   ) {
     this.authService.user$.subscribe((user) => {

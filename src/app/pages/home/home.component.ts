@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse, User } from '../../types/user';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-home',
@@ -30,9 +31,11 @@ import { AuthService } from '../../core/services/auth/auth.service';
     FeedbackCardComponent,
     MatIconModule,
     RouterLink,
+    MatSidenavModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
   readonly categories = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
@@ -72,9 +75,9 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+
   getFeedbacks(): void {
-
-
     this.loading.next(true);
     this.feedbackService
       .getFeedbackData()

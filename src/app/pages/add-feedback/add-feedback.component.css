@@ -86,7 +86,7 @@ textarea::placeholder {
   margin-bottom: 5px;
 }
 button:disabled {
-  background-color: #647196;
+  background-color: #bbb;
   cursor: not-allowed;
 }
 
@@ -103,4 +103,20 @@ button:disabled {
 }
 .add {
   background: #ad1fea;
+}
+
+@media (max-width: 450px) {
+  section {
+    padding: 40px 20px;
+  }
+  .buttons {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+  .cancel {
+    margin: 0;
+  }
+  .edit-box {
+    padding: 52px 20px;
+  }
 }

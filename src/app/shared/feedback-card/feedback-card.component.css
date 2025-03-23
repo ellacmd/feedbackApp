@@ -1,67 +1,110 @@
 section {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 28px 32px;
-    display: flex;
-    gap: 49px;
-    margin-bottom: 20px;
-  }
-  .upvote {
-    width: 40px;
-    height: 53px;
-    border-radius: 10px;
-    background: #f2f4fe;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #3a4374;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  
-  h3 {
-    font-size: 18px;
-    color: #3a4374;
-    margin-bottom: 5px;
-  }
-  .details p {
-    font-size: 16px;
-    color: #647196;
-    margin-bottom: 20px;
-  }
-  .tag {
-    color: #4661e6;
-    font-size: 13px;
-    border-radius: 8px;
-    background: #f2f4ff;
-    padding: 6px 17px;
-    font-weight: 600;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 49px;
+  margin-bottom: 20px;
+}
+.upvote {
+  width: 40px;
+  height: 53px;
+  border-radius: 10px;
+  background: #f2f4fe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #3a4374;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 18px;
+  color: #3a4374;
+  margin-bottom: 5px;
+}
+.details p {
+  font-size: 16px;
+  color: #647196;
+  margin-bottom: 20px;
+}
+.tag {
+  color: #4661e6;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #f2f4ff;
+  padding: 6px 17px;
+  font-weight: 600;
+}
+.comment-box {
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.comment {
+  background-color: transparent;
+}
+.comment-box p {
+  color: #3a4374;
+  font-weight: 700;
+  margin-top: -4px;
+}
+
+.upvoted {
+  color: #fff;
+  background-color: #4661e6;
+}
+.upvote.upvoted:hover {
+  background-color: #4661e6;
+}
+.upvote:hover {
+  background-color: #cfd7ff;
+}
+.truncated-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+p.truncated-text {
+  -webkit-line-clamp: 2 !important;
+}
+.comment-box-mobile {
+  display: none;
+}
+
+@media (max-width: 666px) {
+  section {
+    flex-direction: column-reverse;
+    gap: 20px;
   }
   .comment-box {
+    display: none;
+  }
+  .comment-box-mobile {
     margin-left: auto;
     align-self: center;
     display: flex;
     gap: 10px;
     justify-content: center;
   }
-  .comment {
-    background-color: transparent;
-  }
-  .comment-box p {
+  .comment-box-mobile p {
     color: #3a4374;
     font-weight: 700;
     margin-top: -4px;
   }
-
-  .upvoted{
-    color:#fff;
-    background-color: #4661e6;
+  .upvote-comment {
+    display: flex;
   }
-  .upvote.upvoted:hover {
-    background-color: #4661e6;
+  .upvote {
+    flex-direction: row;
+    height: 40px;
+    width: 53px;
   }
-  .upvote:hover {
-    background-color: #cfd7ff;
-  }
+}

@@ -1,18 +1,27 @@
 <section [style.cursor]="cursorStyle">
-  <button
-    class="upvote"
-    [ngClass]="{ upvoted: isUpvoted }"
-    (click)="upvote($event)"
-  >
-    <img *ngIf="!isUpvoted" src="../../assets/blue-arrow-up.svg" alt="" />
-    <img *ngIf="isUpvoted" src="../../assets/arrow-up.svg" alt="" />
+  <div class="upvote-comment">
+    <button
+      class="upvote"
+      [ngClass]="{ upvoted: isUpvoted }"
+      (click)="upvote($event)"
+    >
+      <img *ngIf="!isUpvoted" src="../../assets/blue-arrow-up.svg" alt="" />
+      <img *ngIf="isUpvoted" src="../../assets/arrow-up.svg" alt="" />
 
-    {{ feedback.upvotes }}
-  </button>
+      {{ feedback.upvotes }}
+    </button>
+
+    <div class="comment-box-mobile">
+      <button class="comment">
+        <img src="../../assets/comment.svg" alt="" />
+      </button>
+      <p>{{ feedback.commentCount }}</p>
+    </div>
+  </div>
 
   <div class="details">
-    <h3>{{ feedback.title }}</h3>
-    <p>{{ feedback.description }}</p>
+    <h3 class="truncated-text">{{ feedback.title }}</h3>
+    <p class="truncated-text">{{ feedback.description }}</p>
 
     <span class="tag">
       {{

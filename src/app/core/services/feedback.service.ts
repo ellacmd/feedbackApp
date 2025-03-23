@@ -89,10 +89,10 @@ export class FeedbackService {
     category: string,
     description: string,
     status: string,
-    feedbackId:string
+    feedbackId: string
   ) {
-    return this.http.post(
-      `${this.baseUrl}product-requests`,
+    return this.http.put(
+      `${this.baseUrl}product-requests/${feedbackId}`,
       {
         title,
         category,
@@ -113,6 +113,13 @@ export class FeedbackService {
     );
   }
 
+  deleteFeedback( id: string) {
+    return this.http.delete(
+      `${this.baseUrl}product-requests/${id}`,
+      this.getAuthHeaders()
+    );
+  }
+
   toggleUpvote(feedbackId: string): Observable<GetSingleFeedbackResponse> {
     return this.http
       .patch<GetSingleFeedbackResponse>(
@@ -121,7 +128,7 @@ export class FeedbackService {
         this.getAuthHeaders()
       )
       .pipe(
-        tap(({productRequest}) => {
+        tap(({ productRequest }) => {
           if (productRequest) {
             this.updateFeedbackInState(productRequest);
           }
@@ -134,7 +141,7 @@ export class FeedbackService {
     if (!currentState) return;
 
     const index = currentState.productRequests.findIndex(
-      (req) =>  req.id === updatedRequest.id
+      (req) => req.id === updatedRequest.id
     );
 
     if (index !== -1) {

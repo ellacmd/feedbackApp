@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Feedback } from '../../types/feedback';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-feedback',
@@ -41,6 +42,8 @@ export class EditFeedbackComponent implements OnInit {
   feedback: Feedback | undefined;
   error = '';
 
+  private _snackBar = inject(MatSnackBar);
+
   constructor(
     private router: Router,
     private readonly feedbackService: FeedbackService,
@@ -54,7 +57,7 @@ export class EditFeedbackComponent implements OnInit {
       this.feedbackId = params.get('id');
     });
     if (this.feedbackId) {
-      this.getFeedbackDetails()
+      this.getFeedbackDetails();
     }
   }
 
@@ -62,24 +65,24 @@ export class EditFeedbackComponent implements OnInit {
     this.location.back();
   }
 
-  editFeedbackForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    status: new FormControl('suggestion', [Validators.required]),
-  });
+  editFeedbackForm!: FormGroup;
 
   initForm(): void {
     this.editFeedbackForm = this.fb.group({
-      title: [this.feedback?.title || '', Validators.required],
-      category: [this.feedback?.category || 'feature', Validators.required],
-      status: [this.feedback?.status || 'suggestion', Validators.required],
-      description: [this.feedback?.description || '', Validators.required],
+      title: [
+        this.feedback?.title || '',
+        [Validators.required, Validators.maxLength(50)],
+      ],
+      category: [this.feedback?.category || 'feature', [Validators.required]],
+      status: [this.feedback?.status || 'suggestion', [Validators.required]],
+      description: [
+        this.feedback?.description || '',
+        [Validators.required, Validators.maxLength(500)],
+      ],
     });
   }
 
   getFeedbackDetails(): void {
-
     if (!this.feedbackId) return;
     this.loading.next(true);
 
@@ -119,7 +122,32 @@ export class EditFeedbackComponent implements OnInit {
       )
       .subscribe({
         next: () => {
+          this._snackBar.open('Feedback edited!', '', { duration: 3000 });
           this.location.back();
+          this.feedbackService.refreshFeedback();
+        },
+        error: ({ error }) => {
+          this.editFeedbackError = error.message;
+        },
+      });
+  }
+  deleteFeedback() {
+    if (!this.feedbackId) return;
+
+    this.loading.next(true);
+
+
+    this.feedbackService
+      .deleteFeedback(this.feedbackId)
+      .pipe(
+        finalize(() => {
+          this.loading.next(false);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this._snackBar.open('Feedback deleted!', '', { duration: 3000 });
+          this.router.navigate(['']);
           this.feedbackService.refreshFeedback();
         },
         error: ({ error }) => {

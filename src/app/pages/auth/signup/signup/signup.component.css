@@ -1,6 +1,7 @@
 .container {
   background-color: #fff;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   border-radius: 5px;
   padding: 10px 30px;
 }
@@ -36,4 +37,11 @@ button:disabled {
 }
 .name-field > div {
   width: 100%;
+}
+
+@media (max-width:540px) {
+  .name-field {
+    flex-direction: column;
+    gap: 0;
+  }
 }

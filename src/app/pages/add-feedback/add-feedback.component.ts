@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FeedbackService } from '../../core/services/feedback.service';
 import {
   FormGroup,
@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Location } from '@angular/common';
 import { BehaviorSubject, finalize } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-feedback',
@@ -35,8 +36,9 @@ export class AddFeedbackComponent {
   addFeedbackError: string | undefined;
   loading = new BehaviorSubject<boolean>(false);
 
+  private _snackBar = inject(MatSnackBar);
+
   constructor(
-    private router: Router,
     private readonly feedbackService: FeedbackService,
     private location: Location
   ) {}
@@ -46,9 +48,9 @@ export class AddFeedbackComponent {
   }
 
   addFeedbackForm = new FormGroup({
-    title: new FormControl('', Validators.required),
+    title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     category: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
     status: new FormControl('suggestion', [Validators.required]),
   });
 
@@ -67,6 +69,7 @@ export class AddFeedbackComponent {
       )
       .subscribe({
         next: () => {
+          this._snackBar.open('Feedback added!', '', { duration: 3000 });
           this.location.back();
           this.feedbackService.refreshFeedback();
         },

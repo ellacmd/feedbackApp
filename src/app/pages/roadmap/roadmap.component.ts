@@ -7,7 +7,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FeedbackService } from '../../core/services/feedback.service';
 import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { Feedback, GetFeedbackResponse } from '../../types/feedback';
@@ -15,6 +15,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthResponse } from '../../types/user';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-roadmap',
@@ -26,9 +27,11 @@ import { AuthResponse } from '../../types/user';
     MatSnackBarModule,
     RouterModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
   ],
   templateUrl: './roadmap.component.html',
   styleUrl: './roadmap.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class RoadmapComponent implements OnInit {
   loading = new BehaviorSubject<boolean>(false);
@@ -67,6 +70,7 @@ export class RoadmapComponent implements OnInit {
       }
     });
   }
+
   getFeedbacks(): void {
     this.loading.next(true);
     this.feedbackService
@@ -82,6 +86,7 @@ export class RoadmapComponent implements OnInit {
         },
       });
   }
+
   goBackToPrevPage(): void {
     this.location.back();
   }

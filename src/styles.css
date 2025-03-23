@@ -1,11 +1,11 @@
 html,
 body {
-  height: 100%;
   background-color: #f2f2f2;
 }
 body {
   margin: 0;
   font-family: "Jost", sans-serif;
+  overscroll-behavior: none;
 }
 * {
   margin: 0;
@@ -18,39 +18,12 @@ button {
   outline: none;
   font-family: "Jost", sans-serif;
 }
-button:disabled{
+button:disabled {
   cursor: not-allowed;
-}
-
-.select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: transparent;
-}
-.select .mat-mdc-select-value,
-.select .mat-mdc-select-placeholder,
-.select .mat-mdc-select-arrow {
-  color: #fff;
-}
-
-.select
-  .mdc-text-field--filled:not(.mdc-text-field--disabled)
-  .mdc-line-ripple::before {
-  border: none;
-
-  background-color: transparent;
-}
-
-.mat-mdc-form-field-infix {
-  width: 145px !important;
-}
-
-.mat-mdc-form-field-subscript-wrapper,
-.mat-mdc-form-field-bottom-align::before {
-  display: none;
 }
 div.mat-mdc-select-panel {
   background-color: #fff !important;
 }
-
 .error {
   color: #ff0000;
 }
@@ -64,5 +37,21 @@ div.mat-mdc-select-panel {
   color: #3a4374;
 }
 .add-select .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background: #f7f8fd ;
+  background: #f7f8fd;
 }
+
+.mat-tab-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.planned-tab .mat-tab-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+

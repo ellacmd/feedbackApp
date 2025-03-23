@@ -162,7 +162,7 @@ section {
   margin-left: auto;
 }
 .reply .text {
-  width: 500px;
+  max-width: 500px;
 }
 /* 
 .vertical-rule {
@@ -207,6 +207,9 @@ textarea::placeholder {
 
   font-size: 15px;
 }
+.add-comment-box > div {
+  margin-top: 27px;
+}
 
 .add-comment-box h2 {
   color: #3a4374;
@@ -230,7 +233,6 @@ textarea::placeholder {
   color: #fff;
   font-weight: 700;
   font-size: 14px;
-  margin-top: 27px;
 }
 .add-reply-box {
   padding-left: 60px;
@@ -277,4 +279,15 @@ textarea::placeholder {
 }
 .errorMessage {
   color: #ff0000;
+}
+@media (max-width: 400px) {
+  section {
+    padding: 40px 20px;
+  }
+  .comment-list-box {
+    padding: 24px 20px;
+  }
+  .add-comment-box {
+    padding: 24px 20px;
+  }
 }

@@ -10,11 +10,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px;
+  padding: 24px;
 }
 .auth-container > div {
   background-color: #fff;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   border-radius: 8px;
 }
 .mat-mdc-tab.mdc-tab {
