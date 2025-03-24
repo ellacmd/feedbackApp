@@ -54,13 +54,20 @@ export class FeedbackService {
     );
   }
 
-  postComment(comment: string, productRequest: string, replyingTo?: string) {
+  postComment(
+    feedbackId: string,
+    comment: string,
+    productRequest: string,
+    replyingTo?: string,
+    replyingToUsername?: string | null
+  ) {
     return this.http.post(
-      `${this.baseUrl}comments`,
+      `${this.baseUrl}product-requests/${feedbackId}/comments`,
       {
         content: comment,
         productRequest,
         replyingTo,
+        replyingToUsername,
       },
       this.getAuthHeaders()
     );
@@ -113,7 +120,7 @@ export class FeedbackService {
     );
   }
 
-  deleteFeedback( id: string) {
+  deleteFeedback(id: string) {
     return this.http.delete(
       `${this.baseUrl}product-requests/${id}`,
       this.getAuthHeaders()

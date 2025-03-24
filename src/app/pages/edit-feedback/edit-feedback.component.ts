@@ -36,7 +36,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './edit-feedback.component.css',
 })
 export class EditFeedbackComponent implements OnInit {
-  editFeedbackError: string | undefined;
+
   loading = new BehaviorSubject<boolean>(false);
   feedbackId: string | null = null;
   feedback: Feedback | undefined;
@@ -122,12 +122,18 @@ export class EditFeedbackComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Feedback edited!', '', { duration: 3000 });
+          this._snackBar.open('Feedback edited!', '', {
+            duration: 3000,
+            panelClass: 'success-toast',
+          });
           this.location.back();
           this.feedbackService.refreshFeedback();
         },
         error: ({ error }) => {
-          this.editFeedbackError = error.message;
+          this._snackBar.open('Failed to edit feedback!', '', {
+            duration: 3000,
+            panelClass: 'error-toast',
+          });
         },
       });
   }
@@ -135,7 +141,6 @@ export class EditFeedbackComponent implements OnInit {
     if (!this.feedbackId) return;
 
     this.loading.next(true);
-
 
     this.feedbackService
       .deleteFeedback(this.feedbackId)
@@ -146,12 +151,18 @@ export class EditFeedbackComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Feedback deleted!', '', { duration: 3000 });
+          this._snackBar.open('Feedback deleted!', '', {
+            duration: 3000,
+            panelClass: ['success-toast'],
+          });
           this.router.navigate(['']);
           this.feedbackService.refreshFeedback();
         },
         error: ({ error }) => {
-          this.editFeedbackError = error.message;
+          this._snackBar.open('Failed to delete feedback!', '', {
+            duration: 3000,
+            panelClass: 'error-toast',
+          });
         },
       });
   }

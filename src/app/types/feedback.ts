@@ -42,4 +42,5 @@ export interface Comment {
   replyingToUsername:string;
   replyingTo:string;
   _id:string;
+  showAllReplies?:boolean
 }

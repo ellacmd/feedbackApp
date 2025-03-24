@@ -136,7 +136,7 @@
 
       <div>
         <mat-icon
-        *ngIf="!sidenav.opened"
+          *ngIf="!sidenav.opened"
           class="hamburger"
           (click)="sidenav.toggle()"
           >menu</mat-icon
@@ -199,6 +199,16 @@
           </div>
         </div>
       </ng-template>
+    </div>
+  </div>
+
+  <div *ngIf="apiError && !(loading | async)">
+    <div class="fetch-error">
+      <div>
+        <img src="../../../assets/no-feedback.svg" alt="" />
+        <p style="margin-bottom: 10px;" class="error">{{ apiError }}</p>
+        <button (click)="getFeedbacks()">Try Again</button>
+      </div>
     </div>
   </div>
   <div

@@ -31,7 +31,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     FeedbackCardComponent,
     MatIconModule,
     RouterLink,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -76,7 +76,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   getFeedbacks(): void {
     this.loading.next(true);
     this.feedbackService
@@ -107,6 +106,8 @@ export class HomeComponent implements OnInit {
               (request) =>
                 request.category.toLowerCase() === category.toLowerCase()
             );
+
+      this.sortFeedback(this.selectedSortOption);
     });
   }
 
@@ -125,6 +126,8 @@ export class HomeComponent implements OnInit {
 
   sortFeedback(criteria: sortCriteria): void {
     if (!this.feedbackData$) return;
+
+    this.selectedSortOption = criteria;
 
     this.filteredFeedbacks.sort((a, b) => {
       switch (criteria) {

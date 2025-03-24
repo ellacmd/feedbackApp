@@ -33,7 +33,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./add-feedback.component.css'],
 })
 export class AddFeedbackComponent {
-  addFeedbackError: string | undefined;
   loading = new BehaviorSubject<boolean>(false);
 
   private _snackBar = inject(MatSnackBar);
@@ -50,7 +49,10 @@ export class AddFeedbackComponent {
   addFeedbackForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     category: new FormControl('', Validators.required),
-    description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(500),
+    ]),
     status: new FormControl('suggestion', [Validators.required]),
   });
 
@@ -69,12 +71,18 @@ export class AddFeedbackComponent {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Feedback added!', '', { duration: 3000 });
+          this._snackBar.open('Feedback added!', '', {
+            duration: 3000,
+            panelClass: ['success-toast'],
+          });
           this.location.back();
           this.feedbackService.refreshFeedback();
         },
         error: ({ error }) => {
-          this.addFeedbackError = error.message;
+          this._snackBar.open('Failed to add feedback!', '', {
+            duration: 3000,
+            panelClass: ['error-toast'],
+          });
         },
       });
   }

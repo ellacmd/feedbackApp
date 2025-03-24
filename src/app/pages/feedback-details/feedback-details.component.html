@@ -37,14 +37,26 @@
             {{ comment.content }}
           </p>
         </div>
-        <button (click)="showReplyBox(comment._id,comment._id, comment.user.username)">
+        <button
+          (click)="
+            showReplyBox(comment._id, comment._id, comment.user.username)
+          "
+        >
           {{ activeReplyBoxId === comment._id ? "Cancel" : "Reply" }}
         </button>
       </div>
 
       <div class="replies">
         <div class="vertical-rule"></div>
-        <div *ngFor="let reply of comment.replies" class="comment reply">
+        <div
+          *ngFor="
+            let reply of comment.replies.slice(
+              0,
+              comment.showAllReplies ? comment.replies.length : 2
+            )
+          "
+          class="comment reply"
+        >
           <div class="heading">
             <div
               [attr.data-initials]="
@@ -62,14 +74,33 @@
                 >{{ reply.content }}
               </p>
             </div>
-            <button (click)="showReplyBox(comment._id, reply._id, reply.user.username)">
+            <button
+              (click)="
+                showReplyBox(comment._id, reply._id, reply.user.username)
+              "
+            >
               {{ activeReplyBoxId === reply._id ? "Cancel" : "Reply" }}
             </button>
           </div>
         </div>
+
+        <button
+          *ngIf="comment.replies.length > 2"
+          (click)="toggleReplies(comment)"
+          class="toggle-replies"
+        >
+          {{
+            comment.showAllReplies
+              ? "Hide replies"
+              : "View all " + comment.replies.length + " replies"
+          }}
+        </button>
       </div>
       <div *ngIf="activeParentCommentId === comment._id" class="add-reply-box">
-        <p>Replying to <strong style="color: #ad1fea;">&#64;{{ replyingToUsername }}</strong></p>
+        <p>
+          Replying to
+          <strong style="color: #ad1fea">&#64;{{ replyingToUsername }}</strong>
+        </p>
 
         <div>
           <textarea

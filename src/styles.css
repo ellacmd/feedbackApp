@@ -52,6 +52,14 @@ div.mat-mdc-select-panel {
   color: #333;
 }
 
+.success-toast {
+  --mdc-snackbar-container-color: #4caf50 !important;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87) !important;
+  --mat-snack-bar-button-color: #c2c2c2 !important;
+}
 
-
-
+.error-toast {
+  --mdc-snackbar-container-color: #f44336 !important;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87) !important;
+  --mat-snack-bar-button-color: #c2c2c2 !important;
+}

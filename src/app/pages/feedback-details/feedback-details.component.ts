@@ -1,15 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Feedback } from '../../types/feedback';
+import { Comment, Feedback } from '../../types/feedback';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FeedbackService } from '../../core/services/feedback.service';
-import { BehaviorSubject, finalize, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FeedbackCardComponent } from '../../shared/feedback-card/feedback-card.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthResponse } from '../../types/user';
 
@@ -38,7 +37,7 @@ export class FeedbackDetailsComponent {
   replyError = '';
   user: AuthResponse | null = null;
   activeReplyBoxId: string | null = null;
-  replyingToUsername: string | null = '';
+  replyingToUsername: string | null | undefined = '';
   activeParentCommentId: string | null = null;
 
   private _snackBar = inject(MatSnackBar);
@@ -69,7 +68,6 @@ export class FeedbackDetailsComponent {
     replyId: string | null,
     username: string
   ): void {
-    console.log(username);
     if (this.activeReplyBoxId === replyId) {
       this.activeReplyBoxId = null;
       this.activeParentCommentId = null;
@@ -81,6 +79,7 @@ export class FeedbackDetailsComponent {
     }
   }
   getFeedbackDetails(): void {
+    this.postCommentError = '';
     if (!this.feedbackId) return;
     this.loading.next(true);
 
@@ -96,6 +95,10 @@ export class FeedbackDetailsComponent {
           this.feedbackDetails = productRequest;
           this.isFeedbackPoster =
             this.feedbackDetails.user === this.user?.user?.id;
+
+          this.feedbackDetails.comments.forEach((comment) => {
+            comment.showAllReplies = false;
+          });
         },
         error: ({ error }: HttpErrorResponse) => {
           this.error = error.message;
@@ -103,11 +106,21 @@ export class FeedbackDetailsComponent {
       });
   }
 
+  toggleReplies(comment: Comment): void {
+    comment.showAllReplies = !comment.showAllReplies;
+  }
+
   postComment(comment: string, replyingTo?: string) {
     if (!this.feedbackDetails) return;
     this.postingComment.next(true);
     this.feedbackService
-      .postComment(comment, this.feedbackDetails.id, replyingTo)
+      .postComment(
+        this.feedbackId!,
+        comment,
+        this.feedbackDetails.id,
+        replyingTo,
+        this.replyingToUsername
+      )
       .pipe(
         finalize(() => {
           this.postingComment.next(false);
@@ -116,16 +129,20 @@ export class FeedbackDetailsComponent {
       .subscribe({
         next: () => {
           this.commentInput = '';
-          this.replyInput=''
-          this._snackBar.open('Comment posted!', '', { duration: 3000 });
+          this.replyInput = '';
+
           this.activeReplyBoxId = null;
           this.activeParentCommentId = null;
           this.replyingToUsername = null;
-       
+
           this.getFeedbackDetails();
+          this.feedbackService.refreshFeedback();
         },
         error: ({ error }: HttpErrorResponse) => {
-          this.postCommentError = error.message;
+          this._snackBar.open('Failed to comment!', '', { 
+            duration: 3000, 
+            panelClass: ['error-toast'] 
+          });
         },
       });
   }

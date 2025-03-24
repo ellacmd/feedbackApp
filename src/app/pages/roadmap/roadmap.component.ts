@@ -127,10 +127,10 @@ export class RoadmapComponent implements OnInit {
 
           this.snackBar.open(
             'Failed to update status. Please try again.',
-            'Close',
+            '',
             {
               duration: 3000,
-              panelClass: ['error-snackbar'],
+              panelClass: ['error-toast'],
             }
           );
         },

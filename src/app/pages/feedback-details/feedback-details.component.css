@@ -101,6 +101,7 @@ section {
   display: flex;
   gap: 14px;
   align-items: start;
+  margin-bottom: 32px;
 }
 [data-initials]:before {
   background: #ad1fea;
@@ -136,7 +137,6 @@ section {
 }
 .text {
   margin-top: 17px;
-  margin-bottom: 32px;
   color: #647196;
   font-size: 15px;
   max-width: 380px;
@@ -242,6 +242,9 @@ textarea::placeholder {
   gap: 12px;
   align-items: start;
 }
+.add-reply-box > p{
+  margin-bottom: 12px;
+}
 .add-reply-box textarea {
   width: 80%;
 }
@@ -280,6 +283,31 @@ textarea::placeholder {
 .errorMessage {
   color: #ff0000;
 }
+
+.toggle-replies {
+  background-color: transparent;
+  margin-bottom: 24px;
+  color: #647196;
+  font-weight: bold;
+}
+.toggle-replies:hover{
+  text-decoration: underline;
+}
+
+@media (max-width: 740px) {
+  .add-reply-box > div{
+
+    width: 100%;
+    flex-direction: column;
+    align-items: end;
+  }
+  .add-reply-box textarea{
+    width: 100%;
+  }
+
+
+}
+
 @media (max-width: 400px) {
   section {
     padding: 40px 20px;
@@ -290,4 +318,5 @@ textarea::placeholder {
   .add-comment-box {
     padding: 24px 20px;
   }
+
 }
