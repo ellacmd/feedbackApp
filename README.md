@@ -42,8 +42,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://www.frontendmentor.io/solutions/feedback-app-solution-using-angular19-and-angular-material-8HpWQST9Ie)
-- Live Site URL: [Add live site URL here](https://feedback-app-e.netlify.app/)
+- Solution URL: [Frontendmentor](https://www.frontendmentor.io/solutions/feedback-app-solution-using-angular19-and-angular-material-8HpWQST9Ie)
+- Live Site URL: [Netlify](https://feedback-app-e.netlify.app/)
 
 ## My process
 
