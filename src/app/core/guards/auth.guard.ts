@@ -9,9 +9,10 @@ export const authGuard: CanActivateFn = async() => {
   const authService = inject(AuthService);
 
   const user = await firstValueFrom(authService.user$);
-  if (user?.token) {
-    return true;
-  } else {
-    return router.createUrlTree(['/auth']);
-  }
+  // if (user?.token) {
+  //   return true;
+  // } else {
+  //   return router.createUrlTree(['/auth']);
+  // }
+  return true
 };
