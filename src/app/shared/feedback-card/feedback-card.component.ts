@@ -18,7 +18,7 @@ export class FeedbackCardComponent implements OnInit {
   @Input() cursorStyle: string | undefined;
   userData: AuthResponse | null = null;
   isLoading = new BehaviorSubject<boolean>(false);
-  isUpvoted = this.feedback?.upvotedBy.includes(this.userData!.user.id);
+  isUpvoted = this.feedback?.upvotedBy.includes(this.userData!.user?.id);
 
   constructor(
     private readonly feedbackService: FeedbackService,
@@ -34,9 +34,9 @@ export class FeedbackCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.feedback && this.userData?.user.id) {
+    if (this.feedback && this.userData?.user?.id) {
       this.isUpvoted = this.feedback?.upvotedBy.includes(
-        this.userData?.user.id
+        this.userData?.user?.id
       );
     }
   }
@@ -51,7 +51,7 @@ export class FeedbackCardComponent implements OnInit {
     this.feedbackService.toggleUpvote(this.feedback._id).subscribe({
       next: (response) => {
         this.isUpvoted = response.productRequest.upvotedBy.includes(
-          this.userData!.user.id
+          this.userData!.user?.id
         );
         this.feedback = {
           ...this.feedback,
