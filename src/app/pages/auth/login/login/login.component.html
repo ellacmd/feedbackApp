@@ -49,6 +49,12 @@
   </form>
 
   <p class="demo-login">
-    Just browsing? <span (click)="loginWithDemo()">Login with Demo</span>
+    Just browsing?
+    <span *ngIf="!(demoLoading | async)" (click)="loginWithDemo()"
+      >Login with Demo</span
+    >
+    <span>
+      <mat-spinner *ngIf="demoLoading | async" [diameter]="20"></mat-spinner
+    ></span>
   </p>
 </div>

@@ -60,7 +60,7 @@
   padding: 14px 24px;
   border-radius: 10px;
 }
-.fetch-error{
+.fetch-error {
   width: 100vw;
   min-height: 100vh;
   background-color: #fff;
@@ -199,7 +199,8 @@ mat-spinner {
   max-width: 450px;
   font-weight: 300;
 }
-.no-feedback button, .fetch-error button {
+.no-feedback button,
+.fetch-error button {
   border-radius: 10px;
   background: #ad1fea;
   color: #fff;
@@ -318,7 +319,7 @@ mat-spinner {
       #a337f6 53.09%,
       #28a7ed 100%
     );
-    padding: 24px;
+    padding: 16px 24px;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -335,8 +336,7 @@ mat-spinner {
   }
 
   .mat-drawer-transition .mat-drawer-backdrop {
-    position: absolute;
-    top: 126px;
+    display: none;
   }
 
   .mat-drawer.mat-drawer-end {
@@ -382,5 +382,4 @@ mat-spinner {
   .mdc-text-field {
     padding: 0 !important;
   }
-
 }

@@ -36,6 +36,7 @@ export class LoginComponent {
   hidePassword = true;
   error = '';
   loading = new BehaviorSubject<boolean>(false);
+  demoLoading = new BehaviorSubject<boolean>(false);
 
   usernameControl = new FormControl('', [Validators.required]);
   passwordControl = new FormControl('', [Validators.required]);
@@ -83,9 +84,10 @@ export class LoginComponent {
   }
 
   loginWithDemo() {
+    this.demoLoading.next(true)
     this.authService
       .login('anon101', '123')
-      .pipe(finalize(() => this.loading.next(false)))
+      .pipe(finalize(() => this.demoLoading.next(false)))
       .subscribe({
         next: (response) => {
           this.router.navigate([''], { replaceUrl: true });

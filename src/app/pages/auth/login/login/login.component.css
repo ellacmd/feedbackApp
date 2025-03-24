@@ -35,6 +35,9 @@ button:disabled {
   font-size: 14px;
   margin-top: 24px;
   margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .demo-login span {
   font-weight: 600;
