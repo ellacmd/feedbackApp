@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.filteredFeedbacks = data.productRequests;
         this.getStatusCount();
-        this.sortFeedback('most-upvotes');
+        this.sortFeedback(this.selectedSortOption);
       }
     });
   }
