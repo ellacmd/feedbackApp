@@ -38,8 +38,11 @@ button:disabled {
 .name-field > div {
   width: 100%;
 }
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
 
-@media (max-width:540px) {
+@media (max-width: 540px) {
   .name-field {
     flex-direction: column;
     gap: 0;

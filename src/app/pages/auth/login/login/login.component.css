@@ -3,13 +3,11 @@
   max-width: 600px;
   width: 100%;
   border-radius: 5px;
-  padding: 10px 30px;
+  padding: 30px;
 }
 
 mat-form-field {
   width: 100%;
-
-  margin-top: 24px;
 }
 
 button {
@@ -20,10 +18,9 @@ button {
   width: 100%;
   font-weight: 700;
   font-size: 16px;
-  margin-top: 24px;
- display: flex;
- justify-content: center;
- align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:disabled {
@@ -34,7 +31,6 @@ button:disabled {
   text-align: center;
   font-size: 14px;
   margin-top: 24px;
-  margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,4 +41,8 @@ button:disabled {
 }
 .demo-login span:hover {
   text-decoration: underline;
+}
+
+.mat-mdc-form-field-subscript-wrapper{
+  display: none !important;
 }

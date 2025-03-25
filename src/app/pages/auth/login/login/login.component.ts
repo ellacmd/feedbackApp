@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 
 import { BehaviorSubject, finalize } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
@@ -28,9 +28,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormField,
     MatInputModule,
   ],
-  standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent {
   hidePassword = true;
@@ -84,7 +84,7 @@ export class LoginComponent {
   }
 
   loginWithDemo() {
-    this.demoLoading.next(true)
+    this.demoLoading.next(true);
     this.authService
       .login('anon101', '123')
       .pipe(finalize(() => this.demoLoading.next(false)))

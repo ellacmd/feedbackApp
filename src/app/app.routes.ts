@@ -37,4 +37,5 @@ export const routes: Routes = [
     component: EditFeedbackComponent,
     title: 'Edit Feedback',
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

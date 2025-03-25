@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -27,6 +27,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class SignupComponent {
   hidePassword = true;
